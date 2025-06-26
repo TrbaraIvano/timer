@@ -9,12 +9,13 @@ namespace TimerApp
 
         public static void Main(string[] args)
         {
-            Stopwatch timer = new Stopwatch();
-            timer.DoTimer();
         }
 
         public void DoTimer()
         {
+
+            Stopwatch timer = new Stopwatch();
+            timer.DoTimer();
             int minuten = 0;
             int sekunden = 0;
             int millisekunden = 0;
@@ -24,44 +25,95 @@ namespace TimerApp
             {
                 millisekunden++;
 
-                if (millisekunden >= 100)
-                {
-                    millisekunden = 0;
-                    sekunden++;
-
-                    if (sekunden >= 60)
-                    {
-                        StopFor3Sec();
-                        sekunden = 0;
-                        minuten++;
-                    }
-                }
-                Console.SetCursorPosition(0, 0);
-                Console.WriteLine($"{minuten:D2}:{sekunden:D2}:{millisekunden:D2}");
-
-                if (Console.KeyAvailable)
-                {
-                    ConsoleKey key = Console.ReadKey(true).Key;
-                    if (key == ConsoleKey.Enter)
-                    {
-                        end = true;  
-                    }
-                }
-                Thread.Sleep(1);
-            }
-        }
-
-        public static void StopFor3Sec()
+namespace Timer
+{
+    public class Timer
+    {
+        public static void Main()
         {
-            int count = 1;
+
+            Console.Write("Willst du Countdown oder Timer: ");
+            string input= Console.ReadLine();
+            if (input == "Countdown")
+            {
+                Countdown();
+            }
+            else if (input== "Timer")
+            {
+                
+            }
+            Console.SetCursorPosition(50, 7);
+            
+            Console.WriteLine();
+
+        }
+        public static void Countdown()
+        {
+            Console.Write("Wie lang dauert der Countdown (s, min, h): ");
+            string input = Console.ReadLine();
+            int totalSec = 0;
+            bool valid = false;
 
             do
             {
-                Console.Beep();
-                Thread.Sleep(1000);
-                count++;
+                input = input.Trim();
+                
+                if(input.Length>= 2 && input.Contains("s") && input[input.Length-1] == 's')
+                {
+                    string numberPart = "";
+                    for (int i = 0; i< input.Length-1; i++)
+                    {
+                        numberPart = numberPart + input[i];
+                    }
+                    int number = 0;
+                    if(int.TryParse(numberPart, out number)  && number>=0)
+                    {
+                        totalSec = number;
+                        valid = true;
+                    }
 
-            } while (count < 3);
+                }
+                else if(input.Length>= 2 && input.Contains("min") && input[input.Length-1] == 'n')
+                {
+                    string numberPart = "";
+                    for (int i = 0; i < input.Length - 3; i++)
+                    {
+                        numberPart = numberPart + input[i];
+                    }
+                    int number = 0;
+                    if (int.TryParse(numberPart, out number) && number >= 0)
+                    {
+                        totalSec = number * 60;
+                        valid = true;
+                    }
+                }
+                else if (input.Length >= 2 && input.Contains("h") && input[input.Length - 1] == 'h')
+                {
+                    string numberPart = "";
+                    for (int i = 0; i < input.Length - 1; i++)
+                    {
+                        numberPart = numberPart + input[i];
+                    }
+                    int number = 0;
+                    if (int.TryParse(numberPart, out number) && number >= 0)
+                    {
+                        totalSec = number * 3600;
+                        valid = true;
+                    }
+                }
+
+            } while (!valid);
+
+            for (int i = totalSec; i >= 0; i--)
+            {
+                Console.Clear();
+                Console.SetCursorPosition(50,7);
+                Console.WriteLine($"Countdown: {i} Sekunden");
+                Thread.Sleep(1000);
+            }
+            Console.Clear();
+            Console.SetCursorPosition(0,7);
+            Console.WriteLine("Countdown abgelaufen!");
         }
     }
 }
