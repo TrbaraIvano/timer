@@ -1,3 +1,4 @@
+using Spectre.Console;
 using System;
 using System.Threading;
 using System.Timers;
@@ -9,14 +10,17 @@ namespace TimerApp
 
         public static void Main()
         {
+            var choice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Willst du [green]Countdown[/] oder [green]Timer[/]?")
+                    .PageSize(10)
+                    .AddChoices(["Countdown", "Timer"]));
 
-            Console.Write("Willst du Countdown oder Timer: ");
-            string input = Console.ReadLine();
-            if (input == "Countdown")
+            if (choice == "Countdown")
             {
                 Countdown();
             }
-            else if (input == "Timer")
+            else if (choice == "Timer")
             {
                 Stopwatch timer = new Stopwatch();
                 timer.DoTimer();
