@@ -51,7 +51,7 @@ namespace WorkoutTimerApp
 
                     if (sekunden >= 60)
                     {
-                        StopFor3Sec();
+                        StopFor10Sec();
                         sekunden = 0;
                         minuten++;
                     }
@@ -75,12 +75,12 @@ namespace WorkoutTimerApp
             }
 
         }
-        public void StopFor3Sec()
+        public void StopFor10Sec()
         {
             int count = 0;
 
 
-            while (count < 3)
+            while (count < 10)
             {
                 Console.Beep();
                 Thread.Sleep(1000);
@@ -152,6 +152,7 @@ namespace WorkoutTimerApp
                 Console.SetCursorPosition(50, 7);
                 Console.WriteLine($"Countdown: {i} Sekunden");
                 Thread.Sleep(1000);
+
             }
             Console.Clear();
             Console.SetCursorPosition(0, 7);
