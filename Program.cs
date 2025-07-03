@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using System.Timers;
 
-namespace TimerApp
+namespace WorkoutTimerApp
 {
     public class Stopwatch
     {
